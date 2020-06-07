@@ -13,17 +13,19 @@ def main():
         '\n\t2: Seleccionar configuracion' +
         '\n\t3: Borrar configuracion' +
         '\n\texit: Volver al menu de arranque\n\t')
-        return switcher.get(selectedOption, lambda : 'Opcion incorrecta')()
+        returnedValue = switcher.get(selectedOption, lambda : 'Opcion incorrecta')()
+        if returnedValue != False: return ''
 pass
 
 def createConfig():
     i = 0
     nombreDeLaConfiguracion = input('Introduce nombre de la configuración:\n\t')
+    if nombreDeLaConfiguracion == 'exit': return False
     confiText = '{\n'
     print('A continuacion introduce las direcciones de los ejecutables en orden de ejecucion\n')
     while True:
         dir = input('Direccion del ejecutable:\n\t').replace('\\', '\\\\')
-        if dir == 'exit': break
+        if dir == 'exit': return False
         treatedDir = re.sub(r'\\{3,}', r'\\', dir)
         #Recordar que se ha modificado la creacion del diccionario
         confiText = confiText + '\'' + str(i) + '\': \'{\'dir\': \'' + treatedDir + '\', \'time\': \'0\'}\''
@@ -37,6 +39,7 @@ def createConfig():
     config = ConfigObj('example.ini')
     config[nombreDeLaConfiguracion] = confiText
     config.write()
+    return True
 pass
 
 def selectConfig():
@@ -44,25 +47,29 @@ def selectConfig():
     print('¿Que configuracion quieres seleccionar? ')
     printConfigs()
     selConfig = existConfig()
+    if selConfig == 'exit': return False
     config['selectedConfig'] = '' + selConfig
     config.write()
-    pass
+    return True
+pass
 
 def borrarCofig():
     config = ConfigObj('example.ini')
     print('¿Que configuracion quieres borrar?')
     printConfigs()
     configABorrar = existConfig()
-    if '' + configABorrar == 'exit': return ''
+    if configABorrar == 'exit': return False
     config.pop('' + configABorrar)
     config.write()
-    pass
+    True
+pass
 
 def printConfigs():
     config = ConfigObj('example.ini')
     for key in config.keys():
             if key != 'selectedConfig': print('\t' + key)
-    pass
+    return True
+pass
 
 def existConfig():
     config = ConfigObj('example.ini')
@@ -76,6 +83,6 @@ def existConfig():
                 break
         if res != '' or selConfig == 'exit': return selConfig
         print('La condiguracion seleccionada no existe\n')
-    pass
+pass
 
 def exit(): return 'exit'

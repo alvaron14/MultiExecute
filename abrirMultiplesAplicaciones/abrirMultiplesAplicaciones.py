@@ -1,4 +1,3 @@
-
 from configobj import ConfigObj
 import subprocess, time, os, _thread, editarConfiguracion, csv
 
@@ -16,6 +15,7 @@ subprocess.Popen("E:\\Steam 2.0\\steam.exe")
 subprocess.Popen("D:\\TS\\ts3client_win64.exe", shell=True) 
 """
 
+print('En cualquier momento puedes usar el comando \'exit\' para volver al menu anterior\n')
 while True: 
 	returnedValue = editarConfiguracion.main()
 	if returnedValue != 'Opcion incorrecta': break
