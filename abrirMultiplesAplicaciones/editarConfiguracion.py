@@ -28,7 +28,7 @@ def createConfig():
         if dir == 'exit': return False
         treatedDir = re.sub(r'\\{3,}', r'\\', dir)
         #Recordar que se ha modificado la creacion del diccionario
-        confiText = confiText + '\'' + str(i) + '\': \'{\'dir\': \'' + treatedDir + '\', \'time\': \'0\'}\''
+        confiText = confiText + '\'' + str(i) + '\': {\'dir\': \'' + treatedDir + '\', \'time\': \'0\'}'
         #config[nombreDeLaConfiguracion][str(i)] = {'Directory': treatedDir, 'Power': 'shell=False'}
         continuar = input('Continuar (y/n)\n\t')
         if continuar == 'n':

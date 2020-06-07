@@ -26,8 +26,9 @@ for key in config.keys():
 	if key == 'selectedConfig': print('La configuracion seleccionada es: ' + config.get(key))
 	else: 
 		configValues = eval(config.get(key))
-		for config in configValues:
-			print(config + ': ' + configValues.get(config))
+		for configGroup in configValues:
+			especificConfig = configValues.get(configGroup)
+			print(str(configGroup) + ': {\'dir\': ' + str(especificConfig.get('dir')) + ', \'time\': ' + str(configValues.get('time')) + '}')
 """
 print(config['exe1']['Directory'] + ' | ' + config['exe1']['Power'])
 print(config['exe2']['Directory'] + ' | ' + config['exe2']['Power'])
