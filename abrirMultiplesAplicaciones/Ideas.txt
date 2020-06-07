@@ -1,0 +1,8 @@
+Al iniciar el programa te muestra el nombre de la configuración seleccionada.
+Tienes 2 segundos para presionar cualquier tecla y entrar al editor, sino se te arranca la ultima configuración seleccionada.
+En el configurador puedes seleccionar si ver las configuraciones de arranque(1) o crear una configuración de arranque(2).
+En las configuraciones de arranque(1) te muestran su nombre y todos los archivos que van a ejecutar cada configuración.
+En las configuraciones de arranque(1) podrás seleccionar o borrar una configuración.
+En el creador de configuración de arranque(2) tendrá una palabra reservada para escaparse de añadir mas direcciones.
+En el creador de configuración de arranque(2) al terminar de seleccionar todas las direcciones te mostrará todas las direcciones y te preguntará si estás de acuerdo,
+en caso de no estarlo te pedirá que linea quieres modificar.
