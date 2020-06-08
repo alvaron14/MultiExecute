@@ -22,14 +22,24 @@ while True:
 	if returnedValue != 'Opcion incorrecta': break
 config = ConfigObj('example.ini')
 
-for key in config.keys():
-	config = ConfigObj('example.ini')
-	if key == 'selectedConfig': print('La configuracion seleccionada es: ' + config.get(key))
-	else: 
-		configValues = eval(config.get(key))
-		for configGroup in configValues:
-			especificConfig = configValues.get(configGroup)
-			print(str(configGroup) + ': {\'dir\': ' + str(especificConfig.get('dir')) + ', \'time\': ' + str(especificConfig.get('time')) + '}')
+selectedConfig = eval(config[str(config['selectedConfig'])])
+for key in selectedConfig.keys():
+	especificConfig = selectedConfig.get(key)
+	if int(especificConfig.get('time')) > 0: time.sleep(int(especificConfig.get('time')))
+	subprocess.Popen(str(especificConfig.get('dir')), shell=True) 
+	arrayTemp = str(especificConfig.get('dir')).rsplit('\\')
+	print('Ejecutado programa: ' + arrayTemp[len(arrayTemp) - 1])
+
+print('Ejecucion completa')
+
+#for key in config.keys():
+#	config = ConfigObj('example.ini')
+#	if key == 'selectedConfig': print('La configuracion seleccionada es: ' + config.get(key))
+#	else: 
+#		configValues = eval(config.get(key))
+#		for configGroup in configValues:
+#			especificConfig = configValues.get(configGroup)
+#			print(str(configGroup) + ': {\'dir\': ' + str(especificConfig.get('dir')) + ', \'time\': ' + str(especificConfig.get('time')) + '}')
 """
 print(config['exe1']['Directory'] + ' | ' + config['exe1']['Power'])
 print(config['exe2']['Directory'] + ' | ' + config['exe2']['Power'])
