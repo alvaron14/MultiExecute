@@ -17,8 +17,10 @@ def main():
         '\n\t4: Añadir tiempos de espera a la configuracion' +
         '\n\texit: Volver al menu de arranque\n\t\t')
         print('\n')
-        returnedValue = switcher.get(selectedOption, lambda : 'Opcion incorrecta')()
-        if returnedValue == 'exit': return ''
+        if ConfigObj('config.ini')['selectedConfig'] == None and selectedOption != '1': print('Necesitas crear una configuracion\n')
+        else:
+            returnedValue = switcher.get(selectedOption, lambda : 'Opcion incorrecta')() 
+            if returnedValue == 'exit': return ''
 pass
 
 def createConfig():
@@ -42,14 +44,15 @@ def createConfig():
             break
         else: confiText = confiText + ',\n'
         i = i + 1
-    config = ConfigObj('example.ini')
+    config = ConfigObj('config.ini')
+    if ConfigObj('config.ini')['selectedConfig'] == None : config['selectedConfig'] = nombreDeLaConfiguracion
     config[nombreDeLaConfiguracion] = confiText
     config.write()
     return True
 pass
 
 def selectConfig():
-    config = ConfigObj('example.ini')
+    config = ConfigObj('config.ini')
     print('¿Que configuracion quieres seleccionar? ')
     printConfigs()
     selConfig = existConfig()
@@ -63,7 +66,7 @@ def selectConfig():
 pass
 
 def borrarCofig():
-    config = ConfigObj('example.ini')
+    config = ConfigObj('config.ini')
     print('¿Que configuracion quieres borrar?')
     printConfigs()
     configABorrar = existConfig()
@@ -77,14 +80,14 @@ def borrarCofig():
 pass
 
 def printConfigs():
-    config = ConfigObj('example.ini')
+    config = ConfigObj('config.ini')
     for key in config.keys():
             if key != 'selectedConfig': print('\t' + key)
     return True
 pass
 
 def existConfig():
-    config = ConfigObj('example.ini')
+    config = ConfigObj('config.ini')
     while True:
         selConfig = input('\t\t')
         res = ''
@@ -98,7 +101,7 @@ def existConfig():
 pass
 
 def añadirTiempos():
-    config = ConfigObj('example.ini')
+    config = ConfigObj('config.ini')
     print('¿Que configuracion quieres seleccionar? ')
     printConfigs()
     selConfig = existConfig()
@@ -140,7 +143,7 @@ pass
 
 #Borrar
 def constructConfig(selectConfig):
-    config = ConfigObj('example.ini')
+    config = ConfigObj('config.ini')
     configValues = eval(config[selectConfig])
     constructedConfig = '{\n'
     i = 0
@@ -155,7 +158,7 @@ def constructConfig(selectConfig):
 pass
 
 def printSelectedConfig():
-    config = ConfigObj('example.ini')
+    config = ConfigObj('config.ini')
     print('La configuracion seleccionada es: ' + config['selectedConfig'] + '\n')
 pass
 

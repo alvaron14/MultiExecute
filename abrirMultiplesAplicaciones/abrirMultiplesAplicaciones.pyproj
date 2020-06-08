@@ -27,7 +27,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="example.ini" />
     <Content Include="Ideas.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
