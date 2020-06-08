@@ -29,7 +29,7 @@ for key in config.keys():
 		configValues = eval(config.get(key))
 		for configGroup in configValues:
 			especificConfig = configValues.get(configGroup)
-			print(str(configGroup) + ': {\'dir\': ' + str(especificConfig.get('dir')) + ', \'time\': ' + str(configValues.get('time')) + '}')
+			print(str(configGroup) + ': {\'dir\': ' + str(especificConfig.get('dir')) + ', \'time\': ' + str(especificConfig.get('time')) + '}')
 """
 print(config['exe1']['Directory'] + ' | ' + config['exe1']['Power'])
 print(config['exe2']['Directory'] + ' | ' + config['exe2']['Power'])

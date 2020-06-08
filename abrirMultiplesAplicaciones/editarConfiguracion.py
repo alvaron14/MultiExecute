@@ -107,35 +107,51 @@ def añadirTiempos():
         return False
     configValues = eval(config[selConfig])
     while True:
-        dirChoosed, timeChoosed = '',''
-        for configGroup in configValues:
+        dirChosen, timeChosen = '',''
+        for configGroup in configValues.keys():
             especificConfig = configValues.get(configGroup)
             print(str(configGroup) + ' --> | Direccion del ejecutable: ' + str(especificConfig.get('dir'))
-                     + '\n      | Tiempo de espera antes de ejecutarse (s): ' + str(configValues.get('time')))
+                     + '\n      | Tiempo de espera antes de ejecutarse (s): ' + str(especificConfig.get('time')))
         while True:
             try:
-                dirChoosed = input('¿Que direccion quieres seleccionar?\n\t\t')
-                if dirChoosed == 'exit': 
+                dirChosen = input('¿Que direccion quieres seleccionar?\n\t\t')
+                if dirChosen == 'exit': 
                     print('\n')
                     return False
                 break
             except:
                 print('\nDireccion incorrecta, selecciona otra\n')
-        while dirChoosed != 'exit':
+        while dirChosen != 'exit':
             try:
-                timeChoosed = input('¿Que tiempo de espera quieres poner?\n\t\t')
-                if timeChoosed == 'exit': 
+                timeChosen = input('¿Que tiempo de espera quieres poner?\n\t\t')
+                if timeChosen == 'exit': 
                     print('\n')
                     return False
-                if int(timeChoosed) < 0: raise NameError('Formato tiempo incorrecto')
+                if int(timeChosen) < 0: raise NameError('Formato tiempo incorrecto')
                 break
             except:
                 print('\nFormato de tiempo incorrecto, insertar unicamente numeros\n')
         configValues = eval(config[selConfig])
-        configValues[dirChoosed]['time'] = int(timeChoosed)
-        #No guarda bien el tiempo
+        configValues.get(dirChosen)['time'] = str(timeChosen)
+        config[selConfig] = str(configValues)
         config.write()
     return True
+pass
+
+#Borrar
+def constructConfig(selectConfig):
+    config = ConfigObj('example.ini')
+    configValues = eval(config[selectConfig])
+    constructedConfig = '{\n'
+    i = 0
+    for configGroup in configValues:
+            especificConfig = configValues.get(configGroup)
+            constructedConfig = constructedConfig + ('\'' + str(configGroup) + '\': {\'dir\': \'' + str(especificConfig.get('dir'))
+                     + '\', \'time\': \'' + str(configValues.get('time')) + '\'}')
+            if i - 1 != len(configValues.keys()): constructedConfig = constructedConfig + ',\n'
+            else: constructedConfig = constructedConfig + '\n'
+    constructedConfig = constructedConfig + '}'
+    return constructedConfig
 pass
 
 def printSelectedConfig():
