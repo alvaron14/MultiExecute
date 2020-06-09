@@ -1,4 +1,6 @@
 from configobj import ConfigObj
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 import  re, time
 def main():
     switcher = {
@@ -32,14 +34,15 @@ def createConfig():
     confiText = '{\n'
     print('A continuacion introduce las direcciones de los ejecutables en orden de ejecucion\n')
     while True:
-        dir = input('Direccion del ejecutable:\n\t\t').replace('\\', '\\\\')
-        if dir == 'exit': 
+        Tk().withdraw()
+        dir = askopenfilename().replace('/', '\\\\')
+        if dir == '': 
             print('\n')
             return False
         treatedDir = re.sub(r'\\{3,}', r'\\', dir)
         confiText = confiText + '\'' + str(i) + '\': {\'dir\': \'' + treatedDir + '\', \'time\': \'0\'}'
         continuar = input('Continuar (y/n)\n\t')
-        if continuar == 'n':
+        if continuar != 'y' or continuar != 'yes':
             confiText = confiText + '\n' + '}'
             break
         else: confiText = confiText + ',\n'
@@ -139,22 +142,6 @@ def añadirTiempos():
         config[selConfig] = str(configValues)
         config.write()
     return True
-pass
-
-#Borrar
-def constructConfig(selectConfig):
-    config = ConfigObj('config.ini')
-    configValues = eval(config[selectConfig])
-    constructedConfig = '{\n'
-    i = 0
-    for configGroup in configValues:
-            especificConfig = configValues.get(configGroup)
-            constructedConfig = constructedConfig + ('\'' + str(configGroup) + '\': {\'dir\': \'' + str(especificConfig.get('dir'))
-                     + '\', \'time\': \'' + str(configValues.get('time')) + '\'}')
-            if i - 1 != len(configValues.keys()): constructedConfig = constructedConfig + ',\n'
-            else: constructedConfig = constructedConfig + '\n'
-    constructedConfig = constructedConfig + '}'
-    return constructedConfig
 pass
 
 def printSelectedConfig():
