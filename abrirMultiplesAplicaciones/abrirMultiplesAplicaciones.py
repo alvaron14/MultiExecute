@@ -5,7 +5,6 @@ from configobj import ConfigObj
 import subprocess, time, os, editarConfiguracion, _thread, asyncio
 
 
-
 def sleepThread():
 	global pressedKey
 	global toConfig
@@ -41,11 +40,13 @@ def main():
 	if len(config) == 0: 
 		config['selectedConfig'] = None
 		config.write()
+	config = ConfigObj('config.ini')
+	editarConfiguracion.printSelectedConfig()
+	if config['selectedConfig'] == str(None):
 		while True:
 			returnedValue = editarConfiguracion.main()
 			if returnedValue != 'Opcion incorrecta': break
 	_thread.start_new_thread(sleepThread, ())
-	print('\n' + ConfigObj('config.ini')['selectedConfig'] + '\n')
 	time.sleep(4)
 	while toConfig: ''
 	isExecuting = True

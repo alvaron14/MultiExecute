@@ -25,6 +25,9 @@
     <Compile Include="editarConfiguracion.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="WindowManager.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Ideas.txt" />

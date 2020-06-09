@@ -1,6 +1,7 @@
 from configobj import ConfigObj
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
+from WindowManager import WindowManager
 import  re, time
 def main():
     switcher = {
@@ -41,14 +42,17 @@ def createConfig():
             return False
         treatedDir = re.sub(r'\\{3,}', r'\\', dir)
         confiText = confiText + '\'' + str(i) + '\': {\'dir\': \'' + treatedDir + '\', \'time\': \'0\'}'
+        w = WindowManager()
+        #Nombre del ejecutable
+        w.find_and_set(".*python.exe*")
         continuar = input('Continuar (y/n)\n\t')
-        if continuar != 'y' or continuar != 'yes':
+        if continuar != 'y' and continuar != 'yes':
             confiText = confiText + '\n' + '}'
             break
         else: confiText = confiText + ',\n'
         i = i + 1
     config = ConfigObj('config.ini')
-    if ConfigObj('config.ini')['selectedConfig'] == None : config['selectedConfig'] = nombreDeLaConfiguracion
+    if ConfigObj('config.ini')['selectedConfig'] == str(None) : config['selectedConfig'] = nombreDeLaConfiguracion
     config[nombreDeLaConfiguracion] = confiText
     config.write()
     return True
@@ -146,7 +150,8 @@ pass
 
 def printSelectedConfig():
     config = ConfigObj('config.ini')
-    print('La configuracion seleccionada es: ' + config['selectedConfig'] + '\n')
+    if config['selectedConfig'] == str(None): print('No hay ninguna configuracion seleccionada\n')
+    else: print('La configuracion seleccionada es: ' + config['selectedConfig'] + '\n')
 pass
 
 def exit(): return 'exit'
